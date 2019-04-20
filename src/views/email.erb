@@ -1,0 +1,33 @@
+<% content_for :title do %>Update email preferences<% end %>
+<div class="profile-info">
+    <form method="POST">
+	<div class="form-group">
+	    <label class="label">Email</label>
+	    <input type="email" name="email" value="<%= current_user.email %>">
+	    <% if current_user.errors[:email] %>
+		<div class="input-error">
+		    Email <%= current_user.errors[:username][0] %>
+		</div>
+	    <% end %>
+	</div>
+
+	<div class="form-group">
+	    <label class="label">Receive notifications</label>
+	    <div class="form-select-wrap">
+		<select class="form-select" name="email_notifications">
+		    <option value="yes" <%= "selected" if current_user.email_notifications %> >
+			Yes
+		    </option>
+		    <option value="no" <%= "selected" unless current_user.email_notifications %> >
+			No
+		    </option>
+		</select>
+	    </div>
+	</div>
+
+	<div class="form-group">
+	    <input type="submit" value="Update">
+	</div>
+    </form>
+</div>
+<%= erb :_footer, locals: {tab: :user, **locals}  %>

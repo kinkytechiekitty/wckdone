@@ -1,0 +1,13 @@
+<% content_for :title do %>Change description<% end %>
+<div class="profile-info">
+    <form action="/description" method="POST">
+	<div class="form-group">
+	    <label class="label">Description</label>
+	    <textarea name="description" rows="10"><%= current_user.description %></textarea>
+	</div>
+	<div class="form-group">
+	    <input type="submit" value="Update">
+	</div>
+    </form>
+</div>
+<%= erb :_footer, locals: {tab: :user, **locals}  %>

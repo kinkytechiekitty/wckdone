@@ -1,0 +1,73 @@
+<% content_for :title do %>Search<% end %>
+<% user = current_user %>
+<div class="profile-info">
+    <form method="POST">
+	<div class="header">Search</div>
+	<div class="form-group">
+	    <label>For a</label>
+	    <div class="form-select-wrap">
+		<select class="form-select" name="gender">
+		    <% User.genders.each do |g| %>
+			<option value="<%= g %>">
+			    <%= g %>
+			</option>
+		    <% end %>
+		</select>
+	    </div>
+	</div>
+
+	<div class="form-group">
+	    <label>Looking for a</label>
+	    <div class="form-select-wrap">
+		<select class="form-select" name="into">
+		    <option value="female">
+			female
+		    </option>
+		    <option value="male">
+			male
+		    </option>
+		    <option value="any">
+			female or male
+		    </option>
+		</select>
+	    </div>
+	</div>
+
+	<div class="form-group">
+	    <label>Keywords</label>
+	    <input type="text" name="keywords" autocorrect="off"
+		   autocapitalize="off">
+	</div>
+
+	<div class="form-group">
+	    <label>Distance</label>
+	    <div class="form-select-wrap">
+		<select class="form-select" name="distance">
+		    <option value="25">
+			25 miles
+		    </option>
+		    <option value="50">
+			50 miles
+		    </option>
+		    <option value="100">
+			100 miles
+		    </option>
+		    <option value="500">
+			500 miles
+		    </option>
+		    <option value="1000">
+			1000 miles
+		    </option>
+		    <option value="-1">
+			anywhere
+		    </option>
+		</select>
+	    </div>
+	</div>
+
+	<div class="form-group">
+	    <input type="submit" value="Search">
+	</div>
+    </form>
+</div>
+<%= erb :_footer, locals: {tab: :search, **locals} %>

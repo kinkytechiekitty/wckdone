@@ -1,0 +1,66 @@
+<% content_for :title do %>Photo Verification<% end %>
+<% unless current_user.verified_photo.nil? %>
+    <div class="verify-photo">
+	<img src="/images/<%= current_user.verified_photo %>">
+	<div class="profile-photo-buttons">
+	    <a class="profile-photo-button" href="/verify/delete">
+		<i class="far fa-trash-alt fa-2x"></i>
+	    </a>
+	</div>
+    </div>
+<% end %>
+<div class="profile-info" style="font-size: 16px;">
+    <% if current_user.review_status.nil? %>
+	<div style="background-color: #f8f8f8; padding: 12px;">
+	    <div class="header">Photo verification needed</div>
+	    <p>
+		Please write on a piece of paper your
+		<strong>username</strong> and today's
+		<strong>date</strong>, take a photo with it and upload it here.
+	    </p>
+	    <p>
+		The photo doesn't need to include your face. A body photo is
+		also acceptable. See the example #2 below.
+	    </p>
+	</div>
+    <% else %>
+	Your verification is
+	<% if current_user.review_status == 'pending' %>
+	    <span class="warning">Pending</span>
+	<% elsif current_user.review_status == 'approved' %>
+	    <span class="success">Approved</span>.
+	    <a class="link" href="/">You can continue</a> or change your photo below
+	<% elsif current_user.review_status == 'rejected' %>
+	    <span class="danger">Rejected</span> because
+	    <em><%= current_user.review_reason %></em>
+	<% end %>
+    <% end %>
+</div>
+
+<div class="profile-info">
+    <form method="POST" enctype="multipart/form-data">
+	<div class="header">
+	    Upload a photo for verification
+	</div>
+	<div class="form-group">
+	    <label class="button" for="select-file">
+		Step 1: Select file
+	    </label>
+	    <input id="select-file" type="file" name="photo">
+	</div>
+	<div class="form-group">
+	    <input type="submit" value="Step 2: Upload">
+	</div>
+    </form>
+</div>
+<div class="verify-examples">
+    <div class="label">Example 1</div>
+    <div class="verify-example-photo">
+	<img src="/images/sample1.jpg">
+    </div>
+    <div class="label">Example 2</div>
+    <div class="verify-example-photo">
+	<img src="/images/sample2.jpg">
+    </div>
+</div>
+<%= erb :_footer, locals: {tab: :user, **locals} %>

@@ -1,0 +1,52 @@
+<% unless @messages.nil? %>
+    <% anchor_set = false %>
+    <% @messages.each do |m, i| %>
+	<% focus = false %>
+	<% unless m.is_system %>
+	    <% if m.is_incoming %>
+		<% direction = 'incoming' %>
+		<% if !anchor_set && m.read_on.nil? %>
+		    <% focus = true %>
+		    <% anchor_set = true %>
+		<% end %>
+	    <% else %>
+		<% direction = 'outgoing' %>
+	    <% end %>
+	    <div <%= 'id="focus"' if focus %> class="message <%= direction %>">
+		<div class="message-bubble">
+		    <% unless m.photo.nil? || m.photo.length == 0 %>
+			<a href="/images/<%= m.photo %>">
+			    <img src="/images/<%= m.photo %>">
+			</a>
+		    <% end %>
+		    <%= to_html m&.message %>
+		</div>
+	    </div>
+	<% end %>
+    <% end %>
+<% end %>
+<div <%= 'id="focus"' unless anchor_set %> class="profile-info">
+    <form action="/matches/<%= @match.id %>/message" method="POST" enctype="multipart/form-data">
+	<div class="form-group" style="margin: 0 0 6px 0">
+	    <label class="label">Reply</label>
+	    <textarea rows="3" name="message"></textarea>
+	</div>
+	<div class="group-buttons">
+	    <label class="small-button" for="select-file">
+		Add a photo
+	    </label>
+	    <input id="select-file" type="file" name="photo">
+	    <button class="small-button">Send</button>
+	</div>
+    </form>
+</div>
+<div class="footer">
+    <div class="footer-inner" style="justify-content: flex-start">
+	<a class="footer-back" href="/matches">
+	    <i class="fas fa-chevron-left fa-lg"></i>
+	</a>
+	<div>
+	    <a href="/user/<%= @match.id %>"><%= @match.username %></a>
+	</div>
+    </div>
+</div>

@@ -1,0 +1,19 @@
+<div class="footer">
+    <div class="footer-inner">
+	<a class="footer-button" href="/">
+	    <i class="fas fa-star fa-lg <%= 'active' if tab == :match %>"></i>
+	</a>
+	<a class="footer-button" href="/search">
+	    <i class="fas fa-search fa-lg <%= 'active' if tab == :search %>"></i>
+	</a>
+	<a class="footer-button" href="/matches">
+	    <% cls = 'danger' if current_user.has_unread %>
+	    <% cls = 'active' if tab == :chat %>
+	    <i class="fas fa-comment fa-lg <%= cls %> "
+	    ></i>
+	</a>
+	<a class="footer-button" href="/profile">
+	    <i class="fas fa-user fa-lg <%= 'active' if tab == :user %>"></i>
+	</a>
+    </div>
+</div>

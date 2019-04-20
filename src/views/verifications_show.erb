@@ -1,0 +1,12 @@
+<img src="/images/<%= @user.verified_photo %>">
+<%= @user.username %>
+
+<form action="/verifications/<%= @user.id %>/approve" method="POST">
+    <input type="submit" value="Approve">
+</form>
+
+<form action="/verifications/<%= @user.id %>/reject" method="POST">
+    <label>Rejection reason</label>
+    <input type="text" name="reason">
+    <input type="submit" value="Reject">
+<form>

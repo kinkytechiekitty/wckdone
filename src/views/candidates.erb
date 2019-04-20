@@ -1,0 +1,7 @@
+<% @candidates.each do |c| %>
+    <div>
+	<a href="/user/<%= c.id %>">
+	    <%= c.username %>, <%= c.gender %><%= ", into males" if c.into_males %><%= ", into females" if c.into_females %>
+	</a>
+    </div>
+<% end %>

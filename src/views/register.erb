@@ -1,0 +1,98 @@
+<% content_for :title do %>Sign up<% end %>
+<% @user.birth_date = Date.today unless @user.birth_date %>
+<form method="POST">
+    <div class="form-group">
+	<label>Username</label>
+	<input type="text" name="username" value="<%= @user.username %>"
+	       autocorrect="off" autocapitalize="off">
+	<% if @user.errors[:username] %>
+	    <div class="input-error">
+		Username <%= @user.errors[:username][0] %>
+	    </div>
+	<% end %>
+    </div>
+
+    <div class="form-group">
+	<label>Date of birth</label>
+	<div class="form-select-wrap">
+	    <select class="form-select select-month" name="birth_month">
+		<% Date::MONTHNAMES.compact.each_with_index do |m, i| %>
+		    <option value="<%= i + 1 %>"
+			    <%= "selected" if @user.birth_date.month == i + 1 %>>
+			<%= m %>
+		    </option>
+		<% end %>
+	    </select>
+	    <select class="form-select select-day" name="birth_day">
+		<% (1..31).each do |d| %>
+		    <%  %>
+		    <option value="<%= d %>" <%= "selected" if @user.birth_date.day == d %>>
+			<%= d %>
+		    </option>
+		<% end %>
+	    </select>
+	    <select class="form-select select-year" name="birth_year">
+		<% (1920..Date.today.year).each do |y| %>
+		    <option value="<%= y %>" <%= "selected" if @user.birth_date.year == y %> >
+			<%= y %>
+		    </option>
+		<% end %>
+	    </select>
+	</div>
+	<% if @user.errors[:birth_date] %>
+	    <div class="input-error">
+		Date of birth <%= @user.errors[:birth_date][0] %>
+	    </div>
+	<% end %>
+    </div>
+
+    <div class="form-group">
+	<label>I am a</label>
+	<div class="form-select-wrap">
+	    <select class="form-select" name="gender">
+		<% User.genders.each do |g| %>
+		    <option value="<%= g %>" <%= "selected" if @user.gender == g.to_s %> >
+			<%= g %>
+		    </option>
+		<% end %>
+	    </select>
+	</div>
+    </div>
+
+    <div class="form-group">
+	<label>Looking for a</label>
+	<div class="form-select-wrap">
+	    <select class="form-select" name="into">
+		<option value="female"
+			<%= "selected" if @user.into_females && !@user.into_males %>>
+		    female
+		</option>
+		<option value="male"
+			<%= "selected" if !@user.into_females && @user.into_males %>>
+		    male
+		</option>
+		<option value="both"
+			<%= "selected" if @user.into_females && @user.into_males %>>
+		    female or male
+		</option>
+	    </select>
+	</div>
+    </div>
+
+    <div class="form-group">
+	<label>Password</label>
+	<input type="password" name="password" value=<%= @user.password %>>
+	<% if @user.errors[:password] %>
+	    <div class="input-error">
+		Password <%= @user.errors[:password][0] %>
+	    </div>
+	<% end %>
+    </div>
+
+    <div class="form-group">
+	<input type="submit" value="Create account">
+	<div>
+	    <small>Already have an account? <a class="link" href="/login">Login instead</a></small>
+	</div>
+    </div>
+</form>

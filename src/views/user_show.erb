@@ -1,0 +1,72 @@
+<% content_for :title do %>WckdOne | <%= @user.username %><% end %>
+<% current_photo = params[:photo].to_i || 0 %>
+<% max_photo = @user.photos.count %>
+<% current_photo = 0 if current_photo > max_photo || current_photo < 0 %>
+<% next_page = ''; next_page = "next=#{params[:next]}" if params[:next] %>
+<div class="profile-photo">
+    <div class="profile-photo-wrapper">
+	<% if current_photo == 0 %>
+	    <img src="/images/<%= @user.verified_photo %>">
+	<% else %>
+	    <img src="/images/<%= @user.photos[current_photo - 1].filename %>">
+	<% end %>
+    </div>
+    <% unless current_user.id == @user.id %>
+	<% if @match %>
+	    <div class="profile-photo-buttons">
+		<a class="profile-photo-button" href="/user/<%= @user.id %>/pass<%= next_page %>">
+		    <i class="danger fas fa-ban fa-2x"></i>
+		</a>
+		<a class="profile-photo-button" href="/matches/<%= @user.id %>#focus">
+		    <i class="success fas fa-comments fa-2x"></i>
+		</a>
+	    </div>
+	<% else %>
+	    <div class="profile-photo-buttons">
+		<% if @my_action&.action == 'pass' %>
+		    <div class="profile-photo-button disabled">
+			<i class="fas fa-times fa-2x"></i>
+		    </div>
+		<% else %>
+		    <a class="profile-photo-button" href="/user/<%= @user.id %>/pass?<%= next_page %>">
+			<i class="warning fas fa-times fa-2x"></i>
+		    </a>
+		<% end %>
+		<% if @my_action&.action == 'like' %>
+		    <div class="profile-photo-button disabled">
+			<i class="fas fa-heart fa-2x"></i>
+		    </div>
+		<% else %>
+		    <a class="profile-photo-button" href="/user/<%= @user.id %>/like?<%= next_page %>">
+			<i class="danger fas fa-heart fa-2x"></i>
+		    </a>
+		<% end %>
+	    </div>
+	<% end %>
+    <% end %>
+    <% if current_photo > 0 %>
+	<div class="profile-photo-left-button">
+	    <i class="fas fa-chevron-left fa-2x"></i>
+	</div>
+	<a class="profile-photo-half-left" href="?photo=<%= current_photo - 1 %>&<%= next_page %>"></a>
+    <% end %>
+    <% if current_photo < max_photo %>
+	<div class="profile-photo-right-button">
+	    <i class="fas fa-chevron-right fa-2x"></i>
+	</div>
+	<a class="profile-photo-half-right" href="?photo=<%= current_photo + 1 %>&<%= next_page %>"></a>
+    <% end %>
+</div>
+<div class="profile-info">
+    <div>
+	<div class="profile-name"><%= @user.username %></div>
+	<div class="profile-details">
+	    (<%= @user.gender %>, <%= @user.age %>yo,
+	    <%= @user.distance_from current_user %>miles)
+	</div>
+	<div class="profile-description">
+	    <%= to_html @user.description %>
+	</div>
+    </div>
+</div>
+<%= erb :_footer, locals: {tab: :match, **locals} %>

@@ -1,0 +1,26 @@
+<% content_for :title do %>Profile options<% end %>
+<div>
+    <a class="profile-option" href="/user/<%= current_user.id %>">
+	View your profile
+    </a>
+    <a class="profile-option" href="/verify">
+	Change verification photo
+    </a>
+    <a class="profile-option" href="/photos">
+	Upload or delete additional photos
+    </a>
+    <a class="profile-option" href="/description">
+	Change Description
+    </a>
+    <a class="profile-option" href="/email">
+	Update Email
+    </a>
+    <a class="profile-option" href="/password">
+	Change Password
+    </a>
+    <a class="profile-option" href="/logout">
+	Logout
+    </a>
+</div>
+<%= erb :_footer, locals: {tab: :user, **locals} %>
+

@@ -1,0 +1,12 @@
+<html>
+    <head>
+	<%= erb :headers %>
+	<title><%= yield_content :title %></title>
+    </head>
+    <body>
+	<navbar><img src="/static/wickedone.png" height="20px"></navbar>
+	<div class="main">
+	    <%= yield %>
+	</div>
+    </body>
+</html>

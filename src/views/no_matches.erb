@@ -1,0 +1,10 @@
+<% content_for :title do %>Matches<% end %>
+<div style="display:flex; align-items:center; justify-content:center;height: 75vh;flex-direction:column; margin: 24px; font-size: 18px; font-weight: 600;text-align:center;">
+    <div><i class="danger fas fa-comment-slash fa-3x"></i></div>
+    <div>No matches yet</div>
+    <div>
+	Keep <a class="link" href="/">matching</a> or
+	<a class="link" href="/search">searching</a>
+    </div>
+</div>
+<%= erb :_footer, locals: {tab: :chat, **locals} %>

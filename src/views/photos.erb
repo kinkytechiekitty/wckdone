@@ -1,0 +1,48 @@
+<% user = current_user %>
+<% content_for :title do %>Upload photo<% end %>
+<% current_photo = params[:photo].to_i || 0 %>
+<% max_photo = user.photos.count() - 1 %>
+<% current_photo = -1 if current_photo > max_photo || current_photo < 0 %>
+<% unless current_photo == -1 %>
+    <div class="profile-photo">
+	<div class="profile-photo-wrapper">
+	    <% unless current_photo == -1 %>
+		<img src="/images/<%= user.photos[current_photo].filename %>">
+	    <% end %>
+	</div>
+	<div class="profile-photo-buttons">
+	    <a class="profile-photo-button" href="/photos/<%= current_photo %>/delete">
+		<i class="far fa-trash-alt fa-2x"></i>
+	    </a>
+	</div>
+	<% if current_photo > 0 %>
+	    <div class="profile-photo-left-button">
+		<i class="fas fa-chevron-left fa-2x"></i>
+	    </div>
+	    <a class="profile-photo-half-left" href="?photo=<%= current_photo - 1 %>"></a>
+	<% end %>
+	<% if current_photo < max_photo %>
+	    <div class="profile-photo-right-button">
+		<i class="fas fa-chevron-right fa-2x"></i>
+	    </div>
+	    <a class="profile-photo-half-right" href="?photo=<%= current_photo + 1 %>"></a>
+	<% end %>
+    </div>
+<% end %>
+<div class="profile-info" style="margin-top:12px" >
+    <form method="POST" enctype="multipart/form-data">
+	<div class="header">
+	    Upload a photo
+	</div>
+	<div class="form-group">
+	    <label class="button" for="select-file">
+		Step 1: Select file
+	    </label>
+	    <input id="select-file" type="file" name="photo">
+	</div>
+	<div class="form-group">
+	    <input type="submit" value = "Step 2: Upload">
+	</div>
+    </form>
+</div>
+<%= erb :_footer, locals: {tab: :user, **locals} %>

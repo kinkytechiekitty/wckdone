@@ -1,0 +1,21 @@
+<% content_for :title do %>Search results<% end %>
+<% next_page = URI.escape("/search/results?start=#{params[:start]}") %>
+<% @users.each do |u| %>
+    <a class="profile-option" href="/user/<%= u.id %>?next=<%= next_page %>">
+	<div class="matches-list-item">
+	    <div class="matches-list-item-image-wrap">
+		<img src="/images/<%= u.verified_photo %>">
+	    </div>
+	    <div class="matches-list-item-username">
+		<%= u.username %>
+	    </div>
+	</div>
+    </a>
+<% end %>
+<% if @next_id %>
+    <a href="/search/results?start=<%= @next_id %>" style="color: white" class="button">Next</a>
+<% else %>
+    <a href="/search" class="button" style="color: white">New search</a>
+<% end %>
+<%= erb :_footer, locals: {tab: :search, **locals} %>
+

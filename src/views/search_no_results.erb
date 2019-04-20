@@ -1,0 +1,8 @@
+<div style="display:flex; align-items:center; justify-content:center;height: 75vh;flex-direction:column; margin: 24px; font-size: 18px; font-weight: 600;text-align:center;">
+    <div><i class="danger fas fa-binoculars fa-3x"></i></div>
+    <div>Search didn't find any users.</div>
+    <div>
+	Try <a class="link" href="/search">a new search</a> or come back later
+    </div>
+</div>
+<%= erb :_footer, locals: {tab: :search, **locals} %>

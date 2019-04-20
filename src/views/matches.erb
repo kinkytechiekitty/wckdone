@@ -1,0 +1,22 @@
+<% content_for :title do %>Matches<% end %>
+<% @matches.each do |m| %>
+    <% is_unread = @conversations[m.id].read_on.nil? %>
+    <a class="profile-option" href="/matches/<%= m.id %>#focus">
+	<div class="matches-list-item">
+	    <div class="matches-list-item-image-wrap">
+		<img src="/images/<%= m.verified_photo %>">
+	    </div>
+	    <div class="matches-list-item-username <%= 'unread' if is_unread %>">
+		<%= m.username %>
+	    </div>
+	    <div>
+		<% if is_unread %>
+		    <i class="danger fas fa-envelope fa-lg"></i>
+		<% else %>
+		    <i class="far fa-envelope-open fa-lg"></i>
+		<% end %>
+	    </div>
+	</div>
+    </a>
+<% end %>
+<%= erb :_footer, locals: {tab: :chat, **locals} %>
